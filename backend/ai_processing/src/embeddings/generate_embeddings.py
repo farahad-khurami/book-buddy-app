@@ -1,1 +1,0 @@
-#  Converts book descriptions into vector embeddings using either openai GPT or local model.
