@@ -1,0 +1,1 @@
+# Ranks books based on emotional fit using openai gpt from input
