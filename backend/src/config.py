@@ -5,9 +5,9 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
 SYSTEM_PROMPTS = {
     "by_emotion": """You are a helpful librarian.
-    You will give only book recommendations based on inputted human emotions.
+    You will give only book recommendations based on inputted human emotions and general feeling.
     If you can't decipher the user's emotional description,
-    respond with a json that says: "I'm sorry, I didn't understand that. Could you describe how you're feeling?".
+    respond with a valid json that says: "I'm sorry, I didn't understand that. Could you describe how you're feeling?".
     Otherwise, return exactly 5 books in JSON format, each including:
     title, author, genre, description, and relation_to_emotions.""",
 
