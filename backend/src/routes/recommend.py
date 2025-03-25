@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from src.models import UserRequest, BookRecommendations
-from src.services.recommend_logic import get_book_recommendation
+from models import UserRequest, BookRecommendations
+from services.recommend_logic import get_book_recommendation
 
 
 router = APIRouter()
