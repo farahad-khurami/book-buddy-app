@@ -11,5 +11,4 @@ async def recommend_books(user_request: UserRequest):
         books = get_book_recommendation(user_request.mood)
         return books
     except Exception as e:
-        print(e)
         raise HTTPException(status_code=500, detail=str(e))

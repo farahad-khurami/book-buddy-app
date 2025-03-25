@@ -1,10 +1,9 @@
-from utils.utils import openai_request, clean_json_response
+from utils.utils import openai_request
 from config import SYSTEM_PROMPTS
+import json
 
 
 def get_book_recommendation(mood: str):
-    raw_response = openai_request(system_prompt=SYSTEM_PROMPTS["by_emotion"], prompt=mood, model="gpt-4o-mini")
-    cleaned_response = clean_json_response(raw_response)
-
-    # ✅ Fix: Ensure it returns a dictionary with the key "recommendations"
-    return {"recommendations": cleaned_response["books"]} if "books" in cleaned_response else {"recommendations": []}
+    response = openai_request(system_prompt=SYSTEM_PROMPTS["by_emotion"], prompt=mood, model="gpt-4o")
+    content = json.loads(response)
+    return content
