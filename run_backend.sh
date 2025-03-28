@@ -22,4 +22,4 @@ echo "Building image: $IMAGE_NAME"
 docker build -t $IMAGE_NAME ./backend
 
 echo "Running container: $CONTAINER_NAME"
-docker run -d -p 8000:8000 --name $CONTAINER_NAME $IMAGE_NAME
+docker run -d -p 8000:8000 --name $CONTAINER_NAME --env-file .env $IMAGE_NAME
