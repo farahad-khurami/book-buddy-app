@@ -1,15 +1,32 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Union
 
-class Book(BaseModel):
+# Emotion-based book model
+class BookByEmotion(BaseModel):
     title: str
     author: str
     genre: str
     description: str
-    relation_to_emotions: str  # Ensure this field matches OpenAI response
+    relation_to_emotions: str
 
-class UserRequest(BaseModel):
+# Genre-based book model
+class BookByGenre(BaseModel):
+    title: str
+    author: str
+    genre: str
+    description: str
+    relation_to_genre: str
+
+# Request models
+class EmotionRequest(BaseModel):
     mood: str
 
-class BookRecommendations(BaseModel):
-    recommendations: List[Book]  # ✅ Change to expect a list of Book objects
+class GenreRequest(BaseModel):
+    genre: str
+
+# Response models
+class EmotionRecommendationResponse(BaseModel):
+    recommendations: List[Union[BookByEmotion, str]]
+
+class GenreRecommendationResponse(BaseModel):
+    recommendations: List[Union[BookByGenre, str]]
