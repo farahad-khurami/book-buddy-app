@@ -2,6 +2,8 @@ import os
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
+MAX_INPUT_TOKENS = 50
+
 SYSTEM_PROMPTS = {
     "by_emotion": (
         "You are a helpful librarian.\n"
