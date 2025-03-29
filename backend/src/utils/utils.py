@@ -13,6 +13,7 @@ def openai_request(prompt: str, system_prompt: str, model: str):
             {"role": "user", "content": prompt},
         ],
         response_format={"type": "json_object"},
+        max_tokens=500
     )
 
     return response.choices[0].message.content
