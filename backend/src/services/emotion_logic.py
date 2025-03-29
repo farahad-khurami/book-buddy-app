@@ -1,5 +1,5 @@
-from utils.utils import openai_request
-from config import SYSTEM_PROMPTS
+from src.utils.utils import openai_request
+from src.config import SYSTEM_PROMPTS
 import json
 
 
