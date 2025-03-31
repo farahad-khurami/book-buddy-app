@@ -1,9 +1,9 @@
 from src.utils.utils import openai_request
-from src.config import SYSTEM_PROMPTS
+from src.config import SYSTEM_PROMPTS, OPENAI_MODEL
 import json
 
 
 def book_emotion_recommendation(mood: str):
-    response = openai_request(system_prompt=SYSTEM_PROMPTS["by_emotion"], prompt=mood, model="gpt-4o")
+    response = openai_request(system_prompt=SYSTEM_PROMPTS["by_emotion"], prompt=mood, model=OPENAI_MODEL)
     content = json.loads(response)
     return content
