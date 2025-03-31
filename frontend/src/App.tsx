@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { emotionMessages, genreMessages } from "./loadingMessages";
 
 export default function App() {
   const [mode, setMode] = useState<"emotion" | "genre">("emotion");
@@ -6,12 +7,29 @@ export default function App() {
   const [recommendations, setRecommendations] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [messageIndex, setMessageIndex] = useState(0);
+
+  // Effect to rotate messages during loading
+  useEffect(() => {
+    if (loading) {
+      const interval = setInterval(() => {
+        setMessageIndex(prev =>
+          prev < (mode === "emotion" ? emotionMessages.length - 1 : genreMessages.length - 1)
+            ? prev + 1
+            : 0
+        );
+      }, 1200); // Change message every 1.2 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [loading, mode]);
 
   const handleModeChange = (newMode: "emotion" | "genre") => {
     setMode(newMode);
     setInput("");
     setRecommendations(null);
     setError(null);
+    setMessageIndex(0);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -19,6 +37,7 @@ export default function App() {
     setRecommendations(null);
     setError(null);
     setLoading(true);
+    setMessageIndex(0);
 
     const endpoint = mode === "emotion" ? "recommend_emotion" : "recommend_genre";
     const key = mode === "emotion" ? "mood" : "genre";
@@ -43,6 +62,75 @@ export default function App() {
     }
   };
 
+  // Loading animation component with cycling messages
+  const LoadingCard = () => {
+    const currentMessage = mode === "emotion"
+      ? emotionMessages[messageIndex]
+      : genreMessages[messageIndex];
+
+    return (
+      <div style={{ marginTop: 24 }}>
+        <div
+          style={{
+            padding: 20,
+            backgroundColor: "#f9f9f9",
+            borderRadius: 8,
+            marginBottom: 12,
+            border: "1px solid #ddd",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          }}
+        >
+          <div style={{ marginBottom: 16, textAlign: "center" }}>
+            <h3 style={{ color: "#007bff" }}>Finding perfect books for you...</h3>
+            <p
+              style={{
+                color: "#666",
+                fontSize: 14,
+                height: "40px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              {currentMessage}
+            </p>
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <div
+              style={{
+                display: "inline-block",
+                position: "relative",
+                width: "80px",
+                height: "80px"
+              }}
+            >
+              {[0, 1, 2].map(index => (
+                <div
+                  key={index}
+                  style={{
+                    position: "absolute",
+                    top: "33px",
+                    width: "13px",
+                    height: "13px",
+                    borderRadius: "50%",
+                    background: "#007bff",
+                    color: "#007bff",
+                    animation: "loading-bounce 1.4s infinite ease-in-out both",
+                    animationDelay: `${index * 0.16}s`,
+                    left: `${8 + (index * 24)}px`,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div
       style={{
@@ -51,12 +139,20 @@ export default function App() {
         backgroundColor: "#f4f4f4",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "flex-start",
         padding: 20,
         boxSizing: "border-box",
         overflow: "auto",
       }}
     >
+      <style>
+        {`
+          @keyframes loading-bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+          }
+        `}
+      </style>
       <div
         style={{
           backgroundColor: "white",
@@ -67,6 +163,7 @@ export default function App() {
           boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
           display: "flex",
           flexDirection: "column",
+          margin: "20px 0",
         }}
       >
         <h1 style={{ fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 16, color: "black" }}>
@@ -128,26 +225,28 @@ export default function App() {
               disabled={loading}
               style={{
                 width: "100%",
-                backgroundColor: "#007bff",
+                backgroundColor: loading ? "#6c757d" : "#007bff", // Gray when loading
                 color: "white",
                 padding: 12,
                 borderRadius: 8,
                 border: "none",
-                cursor: "pointer",
+                cursor: loading ? "not-allowed" : "pointer",
                 fontWeight: "bold",
                 fontSize: 16,
-                boxSizing: "border-box"
+                boxSizing: "border-box",
+                transition: "background-color 0.3s ease"
               }}
             >
-              {loading ? "Thinking..." : "Get Book Recommendations"}
+              {loading ? "Please wait..." : "Get Book Recommendations"}
             </button>
           </div>
         </form>
 
-
         {error && <p style={{ marginTop: 16, color: "red", textAlign: "center" }}>{error}</p>}
 
-        {recommendations && (
+        {loading && <LoadingCard />}
+
+        {!loading && recommendations && (
           <div style={{ marginTop: 24 }}>
             {recommendations.map((rec, idx) => (
               <div
