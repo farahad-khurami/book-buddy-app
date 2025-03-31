@@ -3,9 +3,10 @@ import { LoadingCard, ModeSelector, BookList, SearchForm } from "./components";
 import { fetchRecommendations } from "./utils/api";
 import { BookRecommendation, AppMode } from "./utils/types";
 import styles from "./styles/styles";
+import "./index.css";
 
 export default function App() {
-  const [mode, setMode] = useState<AppMode>("emotion");
+  const [appMode, setAppMode] = useState<AppMode>("emotion");
   const [input, setInput] = useState("");
   const [recommendations, setRecommendations] = useState<BookRecommendation[] | null>(null);
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,7 @@ export default function App() {
   const [messageIndex, setMessageIndex] = useState(0);
 
   const handleModeChange = (newMode: AppMode) => {
-    setMode(newMode);
+    setAppMode(newMode);
     setInput("");
     setRecommendations(null);
     setError(null);
@@ -32,7 +33,7 @@ export default function App() {
     setMessageIndex(0);
 
     try {
-      const data = await fetchRecommendations(mode, input);
+      const data = await fetchRecommendations(appMode, input);
       setRecommendations(data);
     } catch (err: any) {
       setError("Failed to fetch recommendations.");
@@ -42,18 +43,17 @@ export default function App() {
   };
 
   return (
-    <div style={styles.container}>
-      <style>{styles.animations}</style>
+    <div className="app-container">
       <div style={styles.card}>
         <h1 style={styles.title}>BookBuddy</h1>
         
         <ModeSelector 
-          mode={mode} 
+          mode={appMode} 
           onModeChange={handleModeChange} 
         />
         
         <SearchForm 
-          mode={mode}
+          mode={appMode}
           input={input}
           loading={loading}
           onInputChange={handleInputChange}
@@ -64,7 +64,7 @@ export default function App() {
         
         {loading && 
           <LoadingCard 
-            mode={mode} 
+            mode={appMode} 
             messageIndex={messageIndex} 
             setMessageIndex={setMessageIndex} 
           />
@@ -73,7 +73,7 @@ export default function App() {
         {!loading && recommendations && 
           <BookList 
             recommendations={recommendations} 
-            mode={mode} 
+            mode={appMode} 
           />
         }
       </div>
