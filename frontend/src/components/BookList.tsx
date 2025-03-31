@@ -13,7 +13,7 @@ export const BookList: React.FC<BookListProps> = ({ recommendations, mode }) => 
       {recommendations.map((rec, idx) => (
         <div key={idx} style={styles.recommendationCard}>
           {typeof rec === "string" ? (
-            <p>{rec}</p>
+            <p style={{ color: "#FFFFFF" }}>{rec}</p>
           ) : (
             <>
               <h2 style={styles.bookTitle}>{rec.title}</h2>
@@ -32,4 +32,4 @@ export const BookList: React.FC<BookListProps> = ({ recommendations, mode }) => 
       ))}
     </div>
   );
-};
+}
