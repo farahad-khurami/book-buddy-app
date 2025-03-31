@@ -1,11 +1,17 @@
 # services/google_books.py
 import httpx
+import re
 
 GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes"
 
+def clean_title(title: str) -> str:
+    # Remove special characters and lowercase
+    return re.sub(r'[^\w\s]', '', title).lower()
+
 async def fetch_book_metadata(title: str) -> dict:
+    cleaned_title = clean_title(title)
     params = {
-        "q": f'intitle:"{title}"',
+        "q": f'intitle:"{cleaned_title}"',
         "maxResults": 1
     }
 
