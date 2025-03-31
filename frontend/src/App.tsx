@@ -1,6 +1,3 @@
-// BookBuddy SPA Frontend
-// React + Vite (toggle between emotion and genre)
-
 import { useState } from "react";
 
 export default function App() {
@@ -47,9 +44,34 @@ export default function App() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#f4f4f4", padding: 20 }}>
-      <div style={{ backgroundColor: "white", padding: 24, borderRadius: 16, maxWidth: 600, width: "100%", boxShadow: "0 2px 10px rgba(0,0,0,0.1)" }}>
-        <h1 style={{ fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 16 }}>📚 BookBuddy</h1>
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        backgroundColor: "#f4f4f4",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 20,
+        boxSizing: "border-box",
+        overflow: "auto",
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: "white",
+          padding: 24,
+          borderRadius: 16,
+          maxWidth: 600,
+          width: "100%",
+          boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <h1 style={{ fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 16, color: "black" }}>
+          BookBuddy
+        </h1>
 
         <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
           <button
@@ -64,7 +86,7 @@ export default function App() {
               cursor: "pointer"
             }}
           >
-            Emotion
+            Mood
           </button>
           <button
             onClick={() => handleModeChange("genre")}
@@ -81,30 +103,63 @@ export default function App() {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <textarea
-            style={{ width: "100%", padding: 12, borderRadius: 8, border: "1px solid #ccc", resize: "vertical" }}
-            rows={4}
-            placeholder={mode === "emotion" ? "How are you feeling today?" : "What genre are you interested in?"}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            required
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            style={{ marginTop: 12, width: "100%", backgroundColor: "#007bff", color: "white", padding: 12, borderRadius: 8, border: "none", cursor: "pointer" }}
-          >
-            {loading ? "Thinking..." : "Get Book Recommendations"}
-          </button>
+        <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+          <div style={{ width: "100%" }}>
+            <textarea
+              style={{
+                width: "100%",
+                padding: 12,
+                borderRadius: 8,
+                border: "1px solid #ccc",
+                resize: "vertical",
+                fontSize: 14,
+                boxSizing: "border-box"
+              }}
+              rows={4}
+              placeholder={mode === "emotion" ? "How are you feeling today?" : "What genre are you interested in?"}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              required
+            />
+          </div>
+          <div style={{ width: "100%", marginTop: 12 }}>
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                width: "100%",
+                backgroundColor: "#007bff",
+                color: "white",
+                padding: 12,
+                borderRadius: 8,
+                border: "none",
+                cursor: "pointer",
+                fontWeight: "bold",
+                fontSize: 16,
+                boxSizing: "border-box"
+              }}
+            >
+              {loading ? "Thinking..." : "Get Book Recommendations"}
+            </button>
+          </div>
         </form>
+
 
         {error && <p style={{ marginTop: 16, color: "red", textAlign: "center" }}>{error}</p>}
 
         {recommendations && (
           <div style={{ marginTop: 24 }}>
             {recommendations.map((rec, idx) => (
-              <div key={idx} style={{ padding: 16, backgroundColor: "#f9f9f9", borderRadius: 8, marginBottom: 12, border: "1px solid #ddd" }}>
+              <div
+                key={idx}
+                style={{
+                  padding: 16,
+                  backgroundColor: "#f9f9f9",
+                  borderRadius: 8,
+                  marginBottom: 12,
+                  border: "1px solid #ddd"
+                }}
+              >
                 {typeof rec === "string" ? (
                   <p>{rec}</p>
                 ) : (
@@ -112,8 +167,17 @@ export default function App() {
                     <h2 style={{ fontWeight: "bold", color: "#222" }}>{rec.title}</h2>
                     <p style={{ fontSize: 14, color: "#555" }}>by {rec.author} ({rec.genre})</p>
                     <p style={{ marginTop: 8, color: "#333" }}>{rec.description}</p>
-                    <p style={{ marginTop: 8, fontSize: 12, fontStyle: "italic", color: "#555" }}>
-                      {mode === "emotion" ? `Emotion Match: ${rec.relation_to_emotions}` : `Genre Match: ${rec.relation_to_genre}`}
+                    <p
+                      style={{
+                        marginTop: 8,
+                        fontSize: 12,
+                        fontStyle: "italic",
+                        color: "#555"
+                      }}
+                    >
+                      {mode === "emotion"
+                        ? `Emotion Match: ${rec.relation_to_emotions}`
+                        : `Genre Match: ${rec.relation_to_genre}`}
                     </p>
                   </>
                 )}
