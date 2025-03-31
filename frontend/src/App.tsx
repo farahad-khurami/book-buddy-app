@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { emotionMessages, genreMessages } from "./loadingMessages";
 
 export default function App() {
   const [mode, setMode] = useState<"emotion" | "genre">("emotion");
@@ -9,20 +8,36 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [messageIndex, setMessageIndex] = useState(0);
 
+  // Define rotating messages for each mode
+  const emotionMessages = [
+    "Matching your mood with literary treasures",
+    "Finding books to match your emotional state",
+    "Discovering stories that resonate with your feelings",
+    "Curating emotional journeys through literature",
+    "Connecting your mood to meaningful narratives",
+    "Exploring literary worlds that reflect your emotions"
+  ];
 
-
+  const genreMessages = [
+    "Searching for the best titles in your chosen genre",
+    "Curating top picks from your favorite category",
+    "Finding hidden gems in your preferred genre",
+    "Exploring the finest works in your selected style",
+    "Discovering must-reads in your literary territory",
+    "Unearthing celebrated classics and new releases"
+  ];
 
   // Effect to rotate messages during loading
   useEffect(() => {
     if (loading) {
       const interval = setInterval(() => {
-        setMessageIndex(prev =>
-          prev < (mode === "emotion" ? emotionMessages.length - 1 : genreMessages.length - 1)
-            ? prev + 1
+        setMessageIndex(prev => 
+          prev < (mode === "emotion" ? emotionMessages.length - 1 : genreMessages.length - 1) 
+            ? prev + 1 
             : 0
         );
-      }, 1200); // Change message every 2 seconds
-
+      }, 2000); // Change message every 2 seconds
+      
       return () => clearInterval(interval);
     }
   }, [loading, mode]);
@@ -67,10 +82,10 @@ export default function App() {
 
   // Loading animation component with cycling messages
   const LoadingCard = () => {
-    const currentMessage = mode === "emotion"
+    const currentMessage = mode === "emotion" 
       ? emotionMessages[messageIndex]
       : genreMessages[messageIndex];
-
+      
     return (
       <div style={{ marginTop: 24 }}>
         <div
@@ -87,11 +102,11 @@ export default function App() {
         >
           <div style={{ marginBottom: 16, textAlign: "center" }}>
             <h3 style={{ color: "#007bff" }}>Finding perfect books for you...</h3>
-            <p
-              style={{
-                color: "#666",
+            <p 
+              style={{ 
+                color: "#666", 
                 fontSize: 14,
-                height: "40px", // Fixed height to prevent layout shift
+                height: "40px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center"
@@ -100,18 +115,18 @@ export default function App() {
               {currentMessage}
             </p>
           </div>
-
+          
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <div
+            <div 
               style={{
-                display: "inline-block",
+                display: "inline-block", 
                 position: "relative",
                 width: "80px",
                 height: "80px"
               }}
             >
               {[0, 1, 2].map(index => (
-                <div
+                <div 
                   key={index}
                   style={{
                     position: "absolute",
@@ -228,7 +243,7 @@ export default function App() {
               disabled={loading}
               style={{
                 width: "100%",
-                backgroundColor: "#007bff",
+                backgroundColor: loading ? "#6c757d" : "#007bff", // Gray when loading
                 color: "white",
                 padding: 12,
                 borderRadius: 8,
@@ -236,16 +251,17 @@ export default function App() {
                 cursor: loading ? "not-allowed" : "pointer",
                 fontWeight: "bold",
                 fontSize: 16,
-                boxSizing: "border-box"
+                boxSizing: "border-box",
+                transition: "background-color 0.3s ease"
               }}
             >
-              {loading ? "Thinking..." : "Get Book Recommendations"}
+              {loading ? "Please wait..." : "Get Book Recommendations"}
             </button>
           </div>
         </form>
 
         {error && <p style={{ marginTop: 16, color: "red", textAlign: "center" }}>{error}</p>}
-
+        
         {loading && <LoadingCard />}
 
         {!loading && recommendations && (
