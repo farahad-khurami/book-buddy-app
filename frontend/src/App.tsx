@@ -51,7 +51,7 @@ export default function App() {
         backgroundColor: "#f4f4f4",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "flex-start",
         padding: 20,
         boxSizing: "border-box",
         overflow: "auto",
@@ -67,6 +67,7 @@ export default function App() {
           boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
           display: "flex",
           flexDirection: "column",
+          margin: "20px 0",
         }}
       >
         <h1 style={{ fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 16, color: "black" }}>
@@ -143,7 +144,6 @@ export default function App() {
             </button>
           </div>
         </form>
-
 
         {error && <p style={{ marginTop: 16, color: "red", textAlign: "center" }}>{error}</p>}
 
