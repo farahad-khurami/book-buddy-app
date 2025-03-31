@@ -18,6 +18,9 @@ class BookByGenre(BaseModel):
     relation_to_genre: str
 
 # Request models
+class MetadataRequest(BaseModel):
+    titles: List[str]
+    
 class EmotionRequest(BaseModel):
     mood: str
 
