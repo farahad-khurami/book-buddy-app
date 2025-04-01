@@ -1,0 +1,55 @@
+/* src/styles/hover.css */
+
+/* Button hover styles */
+button.regular-button:hover {
+    background-color: #A599FF; /* colors.primaryLight */
+    transform: translateY(-2px);
+  }
+  
+  button.regular-button-inactive:hover {
+    background-color: #252A41; /* colors.card */
+    transform: translateY(-2px);
+  }
+/* src/styles/hover.css (continued) */
+
+button.submit-button:hover:not(:disabled) {
+    background-color: #A599FF; /* colors.primaryLight */
+    box-shadow: 0 6px 20px rgba(138, 128, 255, 0.25); /* colors.glow */
+    transform: translateY(-2px);
+  }
+  
+  /* Recommendation card hover styles */
+  .recommendation-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* colors.shadow */
+    border-color: #8A80FF; /* colors.primary */
+  }
+  
+  /* Book cover image hover styles */
+  .book-cover:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Textarea focus styles */
+  textarea.book-input:focus {
+    border-color: #8A80FF; /* colors.primary */
+    box-shadow: 0 0 0 2px rgba(138, 128, 255, 0.25); /* colors.glow */
+    outline: none;
+  }
+  
+  /* Title after element (gradient line) */
+  .app-title {
+    position: relative;
+    padding-bottom: 16px; /* spacing.md */
+  }
+  
+  .app-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 25%;
+    right: 25%;
+    height: 3px;
+    background: linear-gradient(to right, #8A80FF, #80FFD4, #FFB480); /* colors.primary, colors.accent2, colors.accent1 */
+    border-radius: 3px;
+  }  

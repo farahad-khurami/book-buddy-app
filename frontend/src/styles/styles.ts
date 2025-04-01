@@ -106,6 +106,11 @@ const styles = {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
   `,
 
   card: {
@@ -131,16 +136,7 @@ const styles = {
     letterSpacing: typography.letterSpacing.tight,
     position: "relative",
     paddingBottom: spacing.md,
-    "&::after": {
-      content: '""',
-      position: "absolute",
-      bottom: 0,
-      left: "25%",
-      right: "25%",
-      height: "3px",
-      background: `linear-gradient(to right, ${colors.primary}, ${colors.accent2}, ${colors.accent1})`,
-      borderRadius: "3px",
-    },
+    // Remove &::after
   } as React.CSSProperties,
 
   error: {
@@ -167,10 +163,7 @@ const styles = {
       boxShadow: active ? `0 4px 12px ${colors.glow}` : "none",
       fontSize: typography.fontSizes.body,
       letterSpacing: typography.letterSpacing.wide,
-      "&:hover": {
-        backgroundColor: active ? colors.primaryLight : colors.card,
-        transform: "translateY(-2px)",
-      },
+      // Remove &:hover here
     }),
 
     submit: (loading: boolean): React.CSSProperties => ({
@@ -188,11 +181,7 @@ const styles = {
       boxShadow: loading ? "none" : `0 4px 15px ${colors.glow}`,
       textTransform: "uppercase",
       letterSpacing: "0.5px",
-      "&:hover": {
-        backgroundColor: loading ? colors.text.light : colors.primaryLight,
-        boxShadow: loading ? "none" : `0 6px 20px ${colors.glow}`,
-        transform: loading ? "none" : "translateY(-2px)",
-      },
+      // Remove &:hover here
     }),
   },
 
@@ -221,11 +210,7 @@ const styles = {
     minHeight: "120px",
     fontFamily: typography.fontFamily,
     lineHeight: typography.lineHeights.normal,
-    "&:focus": {
-      borderColor: colors.primary,
-      boxShadow: `0 0 0 2px ${colors.glow}`,
-      outline: "none",
-    },
+    // Remove &:focus
   } as React.CSSProperties,
 
   buttonContainer: {
@@ -307,11 +292,94 @@ const styles = {
     border: `1px solid ${colors.border}`,
     transition: "transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease",
     animation: "fade-in 0.4s ease-out",
-    "&:hover": {
-      transform: "translateY(-3px)",
-      boxShadow: `0 10px 25px ${colors.shadow}`,
-      borderColor: colors.primary,
-    },
+    // Remove &:hover
+    overflow: "hidden",
+  } as React.CSSProperties,
+
+  // New styles for book card with cover
+  bookCard: {
+    display: "flex",
+    gap: spacing.lg,
+    width: "100%",
+  } as React.CSSProperties,
+
+  bookCoverContainer: {
+    position: "relative",
+    minWidth: "120px",
+    maxWidth: "120px",
+    height: "180px",
+    borderRadius: "8px",
+    overflow: "hidden",
+    backgroundColor: "#1A1A2E",
+    boxShadow: `0 4px 8px ${colors.shadow}`,
+  } as React.CSSProperties,
+  
+  bookCover: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    borderRadius: "8px",
+    transition: "transform 0.3s ease",
+    // Remove &:hover
+  } as React.CSSProperties,
+  
+  bookCoverPlaceholder: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.card,
+    color: colors.primary,
+    fontSize: "36px",
+    fontWeight: typography.fontWeights.bold,
+    background: `linear-gradient(135deg, ${colors.card} 0%, ${colors.cardBackground} 100%)`,
+    border: `1px solid ${colors.border}`,
+    borderRadius: "8px",
+    position: "relative",
+    overflow: "hidden"
+  } as React.CSSProperties,
+  
+  coverLoading: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: `linear-gradient(90deg, 
+      ${colors.cardBackground} 0%, 
+      ${colors.card} 50%, 
+      ${colors.cardBackground} 100%)`,
+    backgroundSize: "200% 100%",
+    animation: "shimmer 1.5s infinite linear",
+  } as React.CSSProperties,
+
+  bookRating: {
+    position: "absolute",
+    bottom: "8px",
+    right: "8px",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    color: "#FFD700",
+    padding: "4px 8px",
+    borderRadius: "4px",
+    fontSize: "12px",
+    fontWeight: typography.fontWeights.semibold,
+  } as React.CSSProperties,
+
+  bookDetails: {
+    flex: 1,
+  } as React.CSSProperties,
+
+  metadataLoadingIndicator: {
+    marginTop: spacing.md,
+    padding: spacing.xs,
+    fontSize: "12px",
+    color: colors.text.light,
+    textAlign: "center",
+    background: `linear-gradient(90deg, ${colors.cardBackground} 25%, ${colors.card} 50%, ${colors.cardBackground} 75%)`,
+    backgroundSize: "200% 100%",
+    animation: "shimmer 2s infinite linear",
+    borderRadius: "4px",
   } as React.CSSProperties,
 
   bookTitle: {

@@ -22,6 +22,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({
       <div style={{ width: "100%" }}>
         <textarea
           style={styles.textarea}
+          className="book-input"
           rows={4}
           placeholder={
             mode === "emotion"
@@ -38,6 +39,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({
           type="submit"
           disabled={loading}
           style={styles.button.submit(loading)}
+          className="submit-button"
         >
           {loading ? "Please wait..." : "Get Book Recommendations"}
         </button>
