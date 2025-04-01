@@ -13,7 +13,6 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [messageIndex, setMessageIndex] = useState(0);
-  const [metadataLoading, setMetadataLoading] = useState(false);
 
   const handleModeChange = (newMode: AppMode) => {
     setAppMode(newMode);
@@ -60,72 +59,43 @@ export default function App() {
     setError(null);
     setLoading(true);
     setMessageIndex(0);
-    setMetadataLoading(false);
 
     try {
       // Step 1: Fetch book recommendations
       const books = await fetchRecommendations(appMode, input);
       
-      // Initial display of books without metadata
-      setRecommendations(books);
-      setLoading(false);
-      
-      // Start metadata fetch process after showing initial results
-      setMetadataLoading(true);
-      
-      // Step 2: Get book titles and fetch metadata
+      // Step 2: Get book titles and fetch metadata before showing results
       const titles = extractBookTitles(books);
       console.log("Attempting to fetch metadata for:", titles);
       
       if (titles.length > 0) {
         try {
+          // Fetch metadata for all books
           const metadata = await fetchBookMetadata(titles);
           console.log("Received metadata:", metadata);
           
-          // Step 3: Enrich recommendations with metadata
+          // Enrich recommendations with metadata
           const enrichedRecommendations = enrichRecommendationsWithMetadata(books, metadata);
+          
+          // Now that we have both recommendations and covers, show them to the user
           setRecommendations(enrichedRecommendations);
+          setLoading(false);
         } catch (metadataError) {
           console.error("Failed to fetch book metadata:", metadataError);
-          // If metadata fetch fails for all books, try fetching individually for each book
-          const individualFetches = await Promise.allSettled(
-            titles.map(async (title) => {
-              try {
-                const singleMetadata = await fetchBookMetadata([title]);
-                return { title, metadata: singleMetadata[title] };
-              } catch (e) {
-                console.error(`Failed to fetch metadata for ${title}:`, e);
-                return { title, metadata: null };
-              }
-            })
-          );
           
-          // Extract successful fetches
-          const successfulMetadata: Record<string, BookMetadata> = {};
-          individualFetches.forEach((result) => {
-            if (result.status === 'fulfilled' && result.value.metadata) {
-              successfulMetadata[result.value.title] = result.value.metadata;
-            }
-          });
-          
-          // Apply any successful individual fetches
-          if (Object.keys(successfulMetadata).length > 0) {
-            const partiallyEnrichedRecommendations = enrichRecommendationsWithMetadata(
-              books, 
-              successfulMetadata
-            );
-            setRecommendations(partiallyEnrichedRecommendations);
-          }
+          // Even if metadata fetch fails, still show the recommendations
+          setRecommendations(books);
+          setLoading(false);
         }
+      } else {
+        // If no valid titles found, just show the recommendations
+        setRecommendations(books);
+        setLoading(false);
       }
-      
-      // Final step: Complete metadata loading
-      setMetadataLoading(false);
     } catch (err: any) {
       console.error("Failed to fetch recommendations:", err);
       setError("Failed to fetch recommendations.");
       setLoading(false);
-      setMetadataLoading(false);
     }
   };
 
@@ -161,7 +131,6 @@ export default function App() {
           <BookList 
             recommendations={recommendations} 
             mode={appMode}
-            isLoadingMetadata={metadataLoading}
           />
         }
       </div>

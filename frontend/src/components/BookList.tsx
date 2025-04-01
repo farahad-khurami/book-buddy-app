@@ -5,13 +5,11 @@ import styles from "../styles/styles";
 interface BookListProps {
   recommendations: BookRecommendation[];
   mode: AppMode;
-  isLoadingMetadata?: boolean;
 }
 
 export const BookList: React.FC<BookListProps> = ({ 
   recommendations, 
-  mode,
-  isLoadingMetadata = false 
+  mode
 }) => {
   return (
     <div style={styles.recommendationsList}>
@@ -58,11 +56,7 @@ export const BookList: React.FC<BookListProps> = ({
                   </>
                 ) : (
                   <div style={styles.bookCoverPlaceholder}>
-                    {isLoadingMetadata ? (
-                      <div style={styles.coverLoading}></div>
-                    ) : (
-                      <span>{rec.title?.charAt(0) || "?"}</span>
-                    )}
+                    <span>{rec.title?.charAt(0) || "?"}</span>
                   </div>
                 )}
               </div>
@@ -80,12 +74,6 @@ export const BookList: React.FC<BookListProps> = ({
                     : `Genre Match: ${rec.relation_to_genre}`}
                 </p>
               </div>
-            </div>
-          )}
-          
-          {isLoadingMetadata && typeof rec !== "string" && !rec.metadata && (
-            <div style={styles.metadataLoadingIndicator}>
-              <span>Loading book details...</span>
             </div>
           )}
         </div>

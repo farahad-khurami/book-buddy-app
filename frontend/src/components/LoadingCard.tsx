@@ -9,7 +9,9 @@ const EMOTION_MESSAGES = [
     "Discovering stories that resonate with your feelings",
     "Curating emotional journeys through literature",
     "Connecting your mood to meaningful narratives",
-    "Exploring literary worlds that reflect your emotions"
+    "Exploring literary worlds that reflect your emotions",
+    "Looking up beautiful book covers for your recommendations",
+    "Preparing a personalized reading experience"
 ];
 
 const GENRE_MESSAGES = [
@@ -18,7 +20,9 @@ const GENRE_MESSAGES = [
     "Finding hidden gems in your preferred genre",
     "Exploring the finest works in your selected style",
     "Discovering must-reads in your literary territory",
-    "Unearthing celebrated classics and new releases"
+    "Unearthing celebrated classics and new releases",
+    "Fetching stunning cover art for your recommendations",
+    "Creating a tailored collection just for you"
 ];
 
 interface LoadingCardProps {
