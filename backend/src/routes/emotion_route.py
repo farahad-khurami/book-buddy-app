@@ -3,7 +3,7 @@ import logging
 from fastapi import APIRouter, HTTPException
 from openai import AuthenticationError
 
-from src.config import MAX_INPUT_TOKENS
+from src.config import MAX_INPUT_TOKENS, OPENAI_MODEL
 from src.models import EmotionRequest, EmotionRecommendationResponse
 from src.services.emotion_logic import book_emotion_recommendation
 from src.utils.utils import count_tokens
@@ -17,8 +17,8 @@ router = APIRouter()
 @router.post("/recommend_emotion", response_model=EmotionRecommendationResponse)
 async def recommend_books_by_emotion(user_request: EmotionRequest):
     try:
-        mood = user_request.mood.strip()
-        if count_tokens(mood) > MAX_INPUT_TOKENS:
+        stripped_input = user_request.mood.strip()
+        if count_tokens(text=stripped_input, model=OPENAI_MODEL) > MAX_INPUT_TOKENS:
             raise HTTPException(
                 status_code=400,
                 detail=f"Input too long, please limit your message to {MAX_INPUT_TOKENS} tokens."

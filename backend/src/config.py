@@ -2,8 +2,10 @@ import os
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 OPENAI_MODEL="gpt-4o"
-
 MAX_INPUT_TOKENS = 50
+
+GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes"
+
 
 SYSTEM_PROMPTS = {
     "by_emotion": (

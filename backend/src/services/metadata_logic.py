@@ -1,19 +1,11 @@
-# services/google_books.py
+from src.config import GOOGLE_BOOKS_API_URL
+from src.utils.utils import clean_text
 import httpx
-import re
 
-GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes"
-
-def clean_title(title: str) -> str:
-    # Remove special characters and lowercase
-    return re.sub(r'[^\w\s]', '', title).lower()
 
 async def fetch_book_metadata(title: str) -> dict:
-    cleaned_title = clean_title(title)
-    params = {
-        "q": f'intitle:"{cleaned_title}"',
-        "maxResults": 1
-    }
+    cleaned_title = clean_text(title)
+    params = {"q": f'intitle:"{cleaned_title}"', "maxResults": 1}
 
     async with httpx.AsyncClient() as client:
         response = await client.get(GOOGLE_BOOKS_API_URL, params=params)
@@ -27,5 +19,5 @@ async def fetch_book_metadata(title: str) -> dict:
     return {
         "title": info.get("title", title),
         "imageUrl": info.get("imageLinks", {}).get("thumbnail", ""),
-        "rating": str(info.get("averageRating", "N/A"))
+        "rating": str(info.get("averageRating", "N/A")),
     }

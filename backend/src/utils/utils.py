@@ -1,3 +1,4 @@
+import re
 import openai
 import tiktoken
 
@@ -19,6 +20,10 @@ def openai_request(prompt: str, system_prompt: str, model: str):
     return response.choices[0].message.content
 
 
-def count_tokens(text: str, model: str = "gpt-4o") -> int:
+def count_tokens(text: str, model: str) -> int:
     encoding = tiktoken.encoding_for_model(model)
     return len(encoding.encode(text))
+
+def clean_text(text: str) -> str:
+    # Remove special characters and lowercase
+    return re.sub(r'[^\w\s]', '', text).lower()
