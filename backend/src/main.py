@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.routes import emotion_route
 from src.routes import genre_route
 from src.routes import metadata_route
+from src.routes import auth_route
+from src.routes import user_route
 import os
 
 origins = [os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")]
@@ -20,6 +22,8 @@ app.add_middleware(
 app.include_router(emotion_route.router)
 app.include_router(genre_route.router)
 app.include_router(metadata_route.router)
+app.include_router(auth_route.router)
+app.include_router(user_route.router)
 
 
 """
