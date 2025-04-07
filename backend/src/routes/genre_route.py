@@ -1,12 +1,13 @@
 import logging
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from openai import AuthenticationError
 
 from src.config import MAX_INPUT_TOKENS, OPENAI_MODEL
 from src.models import GenreRequest, GenreRecommendationResponse
 from src.services.genre_logic import book_genre_recommendation
 from src.utils.utils import count_tokens
+from src.auth.auth_deps import get_current_user
 
 
 logger = logging.getLogger(__name__)
@@ -15,7 +16,7 @@ router = APIRouter()
 
 
 @router.post("/recommend_genre", response_model=GenreRecommendationResponse)
-async def recommend_books_by_genre(user_request: GenreRequest):
+async def recommend_books_by_genre(user_request: GenreRequest,_=Depends(get_current_user),):
     try:
         stripped_input = user_request.genre.strip()
         if count_tokens(text=stripped_input, model=OPENAI_MODEL) > MAX_INPUT_TOKENS:

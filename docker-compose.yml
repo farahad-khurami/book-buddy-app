@@ -1,6 +1,6 @@
 services:
   frontend:
-    container_name: bookbuddy-frontend-dev
+    container_name: frontend-dev-bb
     build:
       context: ./frontend
     ports:
@@ -12,7 +12,7 @@ services:
       - backend
 
   backend:
-    container_name: bookbuddy-api-dev
+    container_name: api-dev-bb
     build:
       context: ./backend
     ports:
@@ -21,5 +21,25 @@ services:
       - ./backend:/app
     environment:
       - PYTHONUNBUFFERED=1
+      - DATABASE_URL=postgresql+asyncpg://bookbuddy:bookbuddy@postgres:5432/bookbuddy
     env_file:
       - .env
+    depends_on:
+      - postgres
+
+  postgres:
+    build:
+      context: ./database
+    container_name: db-dev-bb
+    restart: always
+    environment:
+      POSTGRES_USER: bookbuddy
+      POSTGRES_PASSWORD: bookbuddy
+      POSTGRES_DB: bookbuddy
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:
