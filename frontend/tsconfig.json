@@ -1,7 +1,7 @@
 {
-  "files": [],
+  "files": [], // No specific files included
   "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+    { "path": "./tsconfig.app.json" }, // Reference the app-specific TypeScript config
+    { "path": "./tsconfig.node.json" } // Reference the Node.js-specific TypeScript config
   ]
 }

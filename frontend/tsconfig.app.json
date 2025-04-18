@@ -1,26 +1,26 @@
 {
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo", // Cache build info
+    "target": "ES2020", // Target ECMAScript version
+    "useDefineForClassFields": true, // Use `define` for class fields
+    "lib": ["ES2020", "DOM", "DOM.Iterable"], // Include libraries for ES2020 and DOM
+    "module": "ESNext", // Use ESNext module system
+    "skipLibCheck": true, // Skip type checking of declaration files
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-    "jsx": "react-jsx",
+    "moduleResolution": "bundler", // Resolve modules for bundlers
+    "allowImportingTsExtensions": true, // Allow importing TypeScript files with extensions
+    "isolatedModules": true, // Ensure each file is treated as a module
+    "moduleDetection": "force", // Force module detection
+    "noEmit": true, // Do not emit output files
+    "jsx": "react-jsx", // Use React JSX syntax
 
     /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "strict": true, // Enable strict type checking
+    "noUnusedLocals": true, // Report unused local variables
+    "noUnusedParameters": true, // Report unused function parameters
+    "noFallthroughCasesInSwitch": true, // Disallow fallthrough in switch cases
+    "noUncheckedSideEffectImports": true // Disallow imports with side effects
   },
-  "include": ["src"]
+  "include": ["src"] // Include the source directory
 }

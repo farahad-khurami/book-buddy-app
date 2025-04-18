@@ -7,15 +7,17 @@ interface BookListProps {
   mode: AppMode;
 }
 
-export const BookList: React.FC<BookListProps> = ({ 
-  recommendations, 
+// BookList component to display a list of book recommendations
+export const BookList: React.FC<BookListProps> = ({
+  recommendations,
   mode
 }) => {
   return (
-    <div style={styles.recommendationsList}>
+    <div style={styles.recommendationsList}> {/* Container for the list of recommendations */}
       {recommendations.map((rec, idx) => (
         <div key={idx} style={styles.recommendationCard} className="recommendation-card">
           {typeof rec === "string" ? (
+            // Display a message if the recommendation is a string
             <p style={{ color: "#FFFFFF" }}>{rec}</p>
           ) : (
             <div style={styles.bookCard}>
@@ -23,8 +25,8 @@ export const BookList: React.FC<BookListProps> = ({
               <div style={styles.bookCoverContainer}>
                 {rec.metadata?.imageUrl ? (
                   <>
-                    <img 
-                      src={rec.metadata.imageUrl} 
+                    <img
+                      src={rec.metadata.imageUrl}
                       alt={`Cover of ${rec.title}`}
                       style={styles.bookCover}
                       className="book-cover"
@@ -55,12 +57,13 @@ export const BookList: React.FC<BookListProps> = ({
                     )}
                   </>
                 ) : (
+                  // Placeholder for missing book cover
                   <div style={styles.bookCoverPlaceholder}>
                     <span>{rec.title?.charAt(0) || "?"}</span>
                   </div>
                 )}
               </div>
-              
+
               {/* Book Details */}
               <div style={styles.bookDetails}>
                 <h2 style={styles.bookTitle}>{rec.title}</h2>
