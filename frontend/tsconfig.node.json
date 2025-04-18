@@ -1,24 +1,24 @@
 {
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "target": "ES2022",
-    "lib": ["ES2023"],
-    "module": "ESNext",
-    "skipLibCheck": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo", // Cache build info
+    "target": "ES2022", // Target ECMAScript version
+    "lib": ["ES2023"], // Include ES2023 library
+    "module": "ESNext", // Use ESNext module system
+    "skipLibCheck": true, // Skip type checking of declaration files
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
+    "moduleResolution": "bundler", // Resolve modules for bundlers
+    "allowImportingTsExtensions": true, // Allow importing TypeScript files with extensions
+    "isolatedModules": true, // Ensure each file is treated as a module
+    "moduleDetection": "force", // Force module detection
+    "noEmit": true, // Do not emit output files
 
     /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "strict": true, // Enable strict type checking
+    "noUnusedLocals": true, // Report unused local variables
+    "noUnusedParameters": true, // Report unused function parameters
+    "noFallthroughCasesInSwitch": true, // Disallow fallthrough in switch cases
+    "noUncheckedSideEffectImports": true // Disallow imports with side effects
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts"] // Include the Vite configuration file
 }

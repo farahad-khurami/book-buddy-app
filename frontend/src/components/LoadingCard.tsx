@@ -25,12 +25,14 @@ const GENRE_MESSAGES = [
     "Creating a tailored collection just for you"
 ];
 
+// Props interface for the LoadingCard component
 interface LoadingCardProps {
-    mode: AppMode;
-    messageIndex: number;
-    setMessageIndex: React.Dispatch<React.SetStateAction<number>>;
+    mode: AppMode; // Current mode of the app (e.g., "emotion" or "genre")
+    messageIndex: number; // Index of the current loading message
+    setMessageIndex: React.Dispatch<React.SetStateAction<number>>; // Function to update the message index
 }
 
+// LoadingCard component to display a loading animation and messages
 export const LoadingCard: React.FC<LoadingCardProps> = ({
     mode,
     messageIndex,
@@ -42,11 +44,12 @@ export const LoadingCard: React.FC<LoadingCardProps> = ({
 
         const interval = setInterval(() => {
             setMessageIndex(prev => (prev < messages.length - 1 ? prev + 1 : 0));
-        }, 2000);
+        }, 2000); // Rotate messages every 2 seconds
 
-        return () => clearInterval(interval);
+        return () => clearInterval(interval); // Cleanup interval on unmount
     }, [mode, setMessageIndex]);
 
+    // Get the current message based on the mode and index
     const currentMessage = mode === "emotion"
         ? EMOTION_MESSAGES[messageIndex]
         : GENRE_MESSAGES[messageIndex];
@@ -59,6 +62,7 @@ export const LoadingCard: React.FC<LoadingCardProps> = ({
                     <p style={styles.loadingCard.message}>{currentMessage}</p>
                 </div>
 
+                {/* Loading dots animation */}
                 <div style={{ display: "flex", justifyContent: "center" }}>
                     <div style={styles.loadingCard.dotsContainer}>
                         {[0, 1, 2].map(index => (
