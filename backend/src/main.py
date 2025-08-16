@@ -9,6 +9,7 @@ origins = [os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")]
 
 app = FastAPI()
 
+# Hello world
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
